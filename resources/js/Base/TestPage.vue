@@ -1,11 +1,18 @@
 <template>
-<div><h1>Hello</h1></div>
+    <app>
+        <template #main-content>
+            Hello
+        </template>
+    </app>
 </template>
 <script>
 import { defineComponent } from 'vue'
+import App from "./Layout/Dashboard/App.vue";
 
 export default defineComponent({
     name: "TestPage",
+
+    components: {App},
 
     /*components: {},*/
 
