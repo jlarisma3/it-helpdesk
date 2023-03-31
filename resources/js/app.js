@@ -39,10 +39,10 @@ createInertiaApp({
         vApp.config.globalProperties.getMenu = (page) => {
             return [
                 { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-                { name: 'Team', href: '#', icon: UsersIcon, current: false },
-                { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-                { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-                { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
+                { name: 'Tickets', href: '#', icon: UsersIcon, current: false },
+                { name: 'Assets', href: '#', icon: FolderIcon, current: false },
+                { name: 'Users', href: '#', icon: CalendarIcon, current: false },
+                { name: 'Branches', href: '#', icon: DocumentDuplicateIcon, current: false },
                 { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
             ];
         }
