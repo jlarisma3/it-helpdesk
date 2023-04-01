@@ -1,16 +1,16 @@
 <template>
-    <App>
+    <AppSplit>
         <template #side-content>
-            <div class="relative min-h-[400px] overflow-hidden">
+            <div class="relative min-h-screen overflow-hidden">
                 <div class="absolute inset-0 h-full w-full">
-                    <div class="mt-4">
+                    <div class="p-8">
                         <Filter />
                     </div>
                 </div>
             </div>
         </template>
         <template #main-content>
-            <div class="xl:pl-96">
+            <div class="p-8">
                 <Table>
                     <template #table-header>
                         <div class="sm:flex-auto">
@@ -24,17 +24,17 @@
                 </Table>
             </div>
         </template>
-    </App>
+    </AppSplit>
 </template>
 <script>
 import { defineComponent } from 'vue'
-import App from "../../Layout/Dashboard/App.vue";
 import Table from "../../Components/Widgets/Table.vue";
 import Filter from "../../Components/Utilities/Filter.vue";
+import AppSplit from "../../Layout/Dashboard/AppSplit.vue";
 
 export default defineComponent({
     name: "Index",
-    components: {Filter, Table, App},
+    components: {Filter, Table, AppSplit},
 
     /*components: {},*/
 

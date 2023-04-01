@@ -1,15 +1,16 @@
 <template>
-    <App>
+    <AppSplit>
         <template #side-content>
-            <div class="relative min-h-[400px] overflow-hidden">
+            <div class="relative min-h-screen overflow-hidden">
                 <div class="absolute inset-0 h-full w-full">
-                    <div class="mt-4">
+                    <div class="p-8">
+                        <User />
                     </div>
                 </div>
             </div>
         </template>
         <template #main-content>
-            <div class="xl:pl-96">
+            <div class="p-8">
                 <div class="sm:flex items-center gap-x-3">
                     <EnvelopeIcon class="text-gray-400 h-6 w-6" />
                     <h1 class="font-bold text-gray-800">Damaged monitor</h1>
@@ -17,7 +18,6 @@
                 <div class="text-sm text-gray-500">
                     <span>Yesterday 04:00pm • John Doe • Support Group</span>
                 </div>
-
                 <div class="mt-8">
                     <TextDetails
                         :label="'Description:'"
@@ -27,27 +27,28 @@
 '                        Maecenas dignissim sapien at dolor pharetra rutrum'"
                     />
                 </div>
-                <div class="mt-16">
-                    <CommentBox />
-                    <Comment class="mt-8 pt-8 border-t border-gray-200"/>
-                </div>
             </div>
+            <div class="border-t border-b border-gray-200 p-8">
+                <CommentBox />
+            </div>
+            <Comment class="mt-4 p-8"/>
         </template>
-    </App>
+    </AppSplit>
 </template>
 <script>
 import { defineComponent } from 'vue'
-import App from "../../Layout/Dashboard/App.vue";
+import AppSplit from "../../Layout/Dashboard/AppSplit.vue";
 import { EnvelopeIcon } from "@heroicons/vue/20/solid";
 import TextDetails from "../../Components/Widgets/TextDetails.vue";
 import TextForm from "../../Components/Widgets/TextForm.vue";
 import CommentBox from "../../Components/Utilities/CommentBox.vue";
 import Comment from "./Components/Comment.vue";
+import User from "./Components/User.vue";
 
 export default defineComponent({
     name: "Details",
 
-    components: {Comment, CommentBox, TextForm, TextDetails, App, EnvelopeIcon}
+    components: {User, Comment, CommentBox, TextForm, TextDetails, AppSplit, EnvelopeIcon}
 
     /*props: [],*/
 
