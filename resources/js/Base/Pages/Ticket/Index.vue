@@ -1,7 +1,14 @@
 <template>
     <App>
+        <template #side-content>
+            <div>
+                Sides
+            </div>
+        </template>
         <template #main-content>
-
+            <div class="xl:pr-96">
+                Main
+            </div>
         </template>
     </App>
 </template>

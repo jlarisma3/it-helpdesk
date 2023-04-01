@@ -44,7 +44,7 @@ import {
     MenuItems
 } from '@headlessui/vue'
 
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import { ChevronDownIcon, MagnifyingGlassIcon, BellIcon } from '@heroicons/vue/20/solid'
 
 export default defineComponent({
     name: 'Header',
@@ -55,7 +55,8 @@ export default defineComponent({
         MenuItem,
         MenuItems,
         ChevronDownIcon,
-        MagnifyingGlassIcon
+        MagnifyingGlassIcon,
+        BellIcon
     },
 
     computed: {

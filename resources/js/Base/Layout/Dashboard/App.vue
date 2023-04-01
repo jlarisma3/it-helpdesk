@@ -44,19 +44,32 @@
                     </slot>
                 </div>
             </main>
+            <!-- aside content -->
+            <aside v-if="hasSideContent" class="fixed inset-y-0 left-72 hidden w-96 overflow-y-auto border-r border-gray-200 px-4 py-6 sm:px-6 lg:px-8 xl:block">
+                <slot name="side-content">
+                    <!-- side content here -->
+                </slot>
+            </aside>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, useSlots } from 'vue'
 
 import {
-    Bars3Icon,
+    Bars3Icon
 } from '@heroicons/vue/24/outline'
 
 import Sidebar from "../../Components/Dashboard/Sidebar.vue";
 import Header from "../../Components/Dashboard/Header.vue";
 
 const sidebarOpen = ref(false)
+const sideContent = useSlots()
+const mainContent = useSlots()
+
+const hasSideContent = computed((props, context) => {
+    console.log(mainContent);
+});
+
 </script>
