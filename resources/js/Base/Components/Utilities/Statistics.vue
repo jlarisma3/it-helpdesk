@@ -25,7 +25,7 @@ import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
 
 const projects = [
     { name: 'Open', initials: 'GA', href: '#', members: 16, bgColor: 'bg-pink-600' },
-    { name: 'Pending', initials: 'CD', href: '#', members: 12, bgColor: 'bg-purple-600' },
+    { name: 'Queued', initials: 'CD', href: '#', members: 12, bgColor: 'bg-purple-600' },
     { name: 'Ongoing', initials: 'T', href: '#', members: 16, bgColor: 'bg-yellow-500' },
     { name: 'Solved', initials: 'RC', href: '#', members: 8, bgColor: 'bg-green-500' },
 ]

@@ -23,6 +23,7 @@ class TicketController extends Controller
     public function create()
     {
         //
+        return Inertia::render('Pages/Ticket/Form');
     }
 
     /**
@@ -39,6 +40,7 @@ class TicketController extends Controller
     public function show(string $id)
     {
         //
+        return Inertia::render('Pages/Ticket/Details');
     }
 
     /**
