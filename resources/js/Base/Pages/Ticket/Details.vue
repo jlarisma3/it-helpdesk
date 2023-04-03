@@ -3,7 +3,7 @@
         <template #side-content>
             <div class="relative min-h-screen overflow-hidden">
                 <div class="absolute inset-0 h-full w-full">
-                    <div class="p-8">
+                    <div class="py-8">
                         <User />
                     </div>
                 </div>
@@ -11,12 +11,17 @@
         </template>
         <template #main-content>
             <div class="p-8">
-                <div class="sm:flex items-center gap-x-3">
-                    <EnvelopeIcon class="text-gray-400 h-6 w-6" />
-                    <h1 class="font-bold text-gray-800">Damaged monitor</h1>
-                </div>
-                <div class="text-sm text-gray-500">
-                    <span>Yesterday 04:00pm • John Doe • Support Group</span>
+                <div class="sm:flex items-center justify-between">
+                    <div>
+                        <div class="sm:flex items-center gap-x-3">
+                            <EnvelopeIcon class="text-gray-400 h-6 w-6" />
+                            <h1 class="font-bold text-gray-800">Damaged monitor</h1>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            <span>Yesterday 04:00pm • John Doe • Support Group</span>
+                        </div>
+                    </div>
+                    <SelectMenuWithText />
                 </div>
                 <div class="mt-8">
                     <TextDetails
@@ -44,11 +49,12 @@ import TextForm from "../../Components/Widgets/TextForm.vue";
 import CommentBox from "../../Components/Utilities/CommentBox.vue";
 import Comment from "./Components/Comment.vue";
 import User from "./Components/User.vue";
+import SelectMenuWithText from "../../Components/Widgets/SelectMenuWithText.vue";
 
 export default defineComponent({
     name: "Details",
 
-    components: {User, Comment, CommentBox, TextForm, TextDetails, AppSplit, EnvelopeIcon}
+    components: {SelectMenuWithText, User, Comment, CommentBox, TextForm, TextDetails, AppSplit, EnvelopeIcon}
 
     /*props: [],*/
 
