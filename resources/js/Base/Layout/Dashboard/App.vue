@@ -44,12 +44,6 @@
                     </slot>
                 </div>
             </main>
-            <!-- aside content -->
-            <aside v-if="hasSideContent" class="fixed bottom-0 top-16 hidden w-96 overflow-y-auto border-r border-gray-200 px-4 py-6 sm:px-6 lg:px-8 xl:block">
-                <slot name="side-content">
-                    <!-- side content here -->
-                </slot>
-            </aside>
         </div>
     </div>
 </template>
@@ -68,12 +62,6 @@ export default defineComponent({
     name: 'App',
 
     components: {Sidebar, Header, Bars3Icon},
-
-    computed: {
-        hasSideContent() {
-            return !! this.$slots["side-content"];
-        }
-    }
 })
 
 </script>

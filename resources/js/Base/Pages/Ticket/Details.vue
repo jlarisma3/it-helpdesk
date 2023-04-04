@@ -16,12 +16,13 @@
                         <div class="sm:flex items-center gap-x-3">
                             <EnvelopeIcon class="text-gray-400 h-6 w-6" />
                             <h1 class="font-bold text-gray-800">Damaged monitor</h1>
+                            <Badge />
                         </div>
                         <div class="text-sm text-gray-500">
                             <span>Yesterday 04:00pm • John Doe • Support Group</span>
                         </div>
                     </div>
-                    <SelectMenuWithText />
+                    <SelectMenuWithText class="pt-2 right sm:pt-0 sm:clear" />
                 </div>
                 <div class="mt-8">
                     <TextDetails
@@ -50,11 +51,12 @@ import CommentBox from "../../Components/Utilities/CommentBox.vue";
 import Comment from "./Components/Comment.vue";
 import User from "./Components/User.vue";
 import SelectMenuWithText from "../../Components/Widgets/SelectMenuWithText.vue";
+import Badge from "../../Components/Widgets/Badge.vue";
 
 export default defineComponent({
     name: "Details",
 
-    components: {SelectMenuWithText, User, Comment, CommentBox, TextForm, TextDetails, AppSplit, EnvelopeIcon}
+    components: {Badge, SelectMenuWithText, User, Comment, CommentBox, TextForm, TextDetails, AppSplit, EnvelopeIcon}
 
     /*props: [],*/
 

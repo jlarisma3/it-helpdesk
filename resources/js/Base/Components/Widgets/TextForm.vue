@@ -6,7 +6,6 @@
                 :readonly="read_only || false"
                 :value="modelValue"
                 @input="$emit('update:modelValue', $event.target.value)"
-                :name="name"
                 :type="type"
                 :class="{ 'bg-gray-200': read_only }"
                 class="block w-full rounded-md border-gray-300 sm:text-sm" />
@@ -26,7 +25,6 @@ export default defineComponent({
 
     props: [
         'label',
-        'name',
         'type',
         'modelValue',
         'error',
