@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             RoleEndpointSeeder::class,
             BranchSeeder::class,
             DepartmentSeeder::class,
-            UserSupportGroupSeeder::class
+            SupportGroupSeeder::class
         ]);
 
          \App\Models\User\User::factory(10)->create();

@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * @var UserRepository|mixed
+     */
     private UserRepository $userRepository;
 
     /**
@@ -70,7 +73,7 @@ class UserController extends Controller
     {
         $this->userRepository->set($user)->update($request);
 
-        return redirect()->route('member.show', ['user' => $user->id]);
+        return redirect()->route('user.show', ['user' => $user->id]);
     }
 
     /**
@@ -78,6 +81,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $this->userRepository->set($user)->delete();
+
+        return redirect()->route('user.index');
     }
 }
