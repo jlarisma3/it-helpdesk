@@ -19,9 +19,12 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
             RoleSeeder::class,
             RoleEndpointSeeder::class,
+            BranchSeeder::class,
+            DepartmentSeeder::class,
+            UserSupportGroupSeeder::class
         ]);
 
-         \App\Models\User\User::factory(50)->create();
+         \App\Models\User\User::factory(10)->create();
 
          //UserPayment::factory(50)->create();
     }

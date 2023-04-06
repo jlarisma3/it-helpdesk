@@ -17,10 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
+            $table->string('color')->nullable();
+            $table->string('type')->nullable();
+            $table->float('order')->nullable();
         });
 
         Schema::table('statuses', function (Blueprint $table) {
-            $table->index('code');
+            $table->index(['code', 'type']);
         });
     }
 
@@ -32,7 +35,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('statuses', function (Blueprint $table) {
-            $table->dropIndex('statuses_code_index');
+            $table->dropIndex('statuses_code_type_index');
         });
 
         Schema::dropIfExists('statuses');

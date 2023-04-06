@@ -2,6 +2,8 @@
 
 namespace Database\Factories\User;
 
+use App\Models\Common\Branch\Branch;
+use App\Models\Common\Branch\Department;
 use App\Models\User\Role\Role;
 use App\Models\User\Status\Status;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -38,6 +40,8 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'role_id' => Role::where('code', 'admin')->first()->id,
             'status_id' => Status::where('code', 'activ')->first()->id,
+            'branch_id' => Branch::where('code', 'CEB-OFC')->first()->id,
+            'department_id' => Department::where('code', 'IT-DEPT')->first()->id
         ];
     }
 }
