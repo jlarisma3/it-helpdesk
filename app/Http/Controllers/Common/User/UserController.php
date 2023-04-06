@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Common\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserRequest;
+use App\Http\Requests\Admin\User\UserUpdateRequest;
+use App\Models\User\User;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,7 @@ class UserController extends Controller
      */
     public function __construct(UserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->userRepository = $userRepository->init();
     }
 
     /**
@@ -40,13 +42,15 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        //
+        $user = $this->userRepository->create($request);
+
+        return redirect()->route('user.show', ['user' => $user->id]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
         //
     }
@@ -54,7 +58,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
         //
     }
@@ -62,15 +66,17 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        $this->userRepository->set($user)->update($request);
+
+        return redirect()->route('member.show', ['user' => $user->id]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
         //
     }
