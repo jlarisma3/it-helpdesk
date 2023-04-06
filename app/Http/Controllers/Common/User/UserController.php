@@ -8,9 +8,12 @@ use App\Http\Requests\Admin\User\UserUpdateRequest;
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    CONST RESOURCE_VIEW = 'Pages/Admin/User/';
+
     /**
      * @var UserRepository|mixed
      */
@@ -22,6 +25,10 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository->init();
+
+        $this->pageData = [
+            'page' => ['name' => 'admin-user']
+        ];
     }
 
     /**
@@ -30,6 +37,7 @@ class UserController extends Controller
     public function index()
     {
         //
+        return Inertia::render(self::RESOURCE_VIEW . 'Index', $this->pageData);
     }
 
     /**
