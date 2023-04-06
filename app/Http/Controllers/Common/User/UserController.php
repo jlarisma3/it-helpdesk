@@ -3,10 +3,22 @@
 namespace App\Http\Controllers\Common\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\User\UserRequest;
+use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    private UserRepository $userRepository;
+
+    /**
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -18,7 +30,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request  $request)
     {
         //
     }
@@ -26,7 +38,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         //
     }

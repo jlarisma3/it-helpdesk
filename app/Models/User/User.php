@@ -3,6 +3,8 @@
 namespace App\Models\User;
 
 use App\Models\_Traits\Search\Search;
+use App\Models\Common\Branch\Branch;
+use App\Models\Common\Branch\Department;
 use App\Models\User\Role\Role;
 use App\Models\User\Status\Status;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -95,6 +97,22 @@ class User extends Authenticatable
     public function role() : BelongsTo
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function branch() : BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function department() : BelongsTo
+    {
+        return $this->belongsTo(Department::class);
     }
 
     /**
