@@ -23,5 +23,10 @@ class UserRepository implements RepoInterface
         return $this;
     }
 
-    public function all(Request $request) {}
+    public function all(Request $request)
+    {
+        return $this->model
+            ->with(['branch', 'department'])
+            ->paginate(config('data.page_limit'));
+    }
 }

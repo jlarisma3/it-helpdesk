@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Common\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserRequest;
 use App\Http\Requests\Admin\User\UserUpdateRequest;
+use App\Http\Resources\Common\User\UserCollection;
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
@@ -92,5 +93,16 @@ class UserController extends Controller
         $this->userRepository->set($user)->delete();
 
         return redirect()->route('user.index');
+    }
+
+    /**
+     * @param Request $request
+     * @return UserCollection
+     */
+    public function all(Request $request)
+    {
+        $users = $this->userRepository->all($request);
+
+        return  new UserCollection($users);
     }
 }

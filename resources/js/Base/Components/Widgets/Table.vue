@@ -9,7 +9,7 @@
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead>
                         <tr>
-                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+<!--                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
                                 <a href="#" class="group inline-flex">
                                     ID
                                     <span class="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
@@ -43,11 +43,23 @@
                             </th>
                             <th scope="col" class="relative py-3.5 pl-3 pr-0">
                                 <span class="sr-only">Edit</span>
-                            </th>
+                            </th>-->
+
+                            <template v-for="(column, i) in columns" :key="i">
+                                <th scope="col" :class="[{'sm:pl-0' : i == 0}, 'py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900']">
+                                    <a href="#" class="group inline-flex">
+                                        {{ column.label }}
+                                        <span v-if="column.sortable" class="ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
+                                          <ChevronDownIcon class="h-5 w-5" aria-hidden="true" />
+                                        </span>
+                                    </a>
+                                </th>
+                            </template>
+                            <th v-if="hasActions" scope="col" class="relative py-3.5 pl-3 pr-0">&nbsp;</th>
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                        <tr v-for="person in people" :key="person.email">
+<!--                            <tr v-for="person in people" :key="person.email">
                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ person.name }}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.title }}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.email }}</td>
@@ -57,7 +69,16 @@
                                 >Edit<span class="sr-only">, {{ person.name }}</span></a
                                 >
                             </td>
-                        </tr>
+                        </tr>-->
+                            <tr  v-for="(item, k) in source_data" :key="k">
+                                <td v-for="(column, i) in columns" :key="i" :class="[{'sm:pl-0' : (i == 0)}, 'whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900']" >
+                                    {{ tableData(column, item) }}
+                                </td>
+                                <!-- actions -->
+                                <td v-if="hasActions">
+                                    <slot name="actions" :data="item"></slot>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -67,7 +88,8 @@
     </div>
 </template>
 
-<script setup>
+<script>
+import { defineComponent } from "vue";
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import Page from "./Page.vue";
 
@@ -79,4 +101,74 @@ const people = [
     { name: '100012', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
     // More people...
 ]
+
+export default defineComponent({
+    name: "Table",
+
+    components: { ChevronDownIcon, Page },
+
+    setup() {
+        return {
+            people
+        };
+    },
+
+    props: [
+        'columns',
+        'data',
+        'has_actions',
+        'source'
+    ],
+
+    data() {
+        return {
+            source_data: [],
+            page_settings: null
+        }
+    },
+
+    computed: {
+        hasActions() {
+            return !! this.$slots.actions;
+        }
+    },
+
+    methods: {
+        tableData(setting, item) {
+            console.log(setting, item);
+            if(setting.column.match(/\./) != null)
+            {
+                let rel = setting.column.split('.');
+                let tmp;
+                for (let i = 0; i < rel.length; i++) {
+                    if(i == 0) {
+                        tmp = item[rel[i]];
+                    }
+                    else {
+                        tmp = tmp == null ? '' : tmp[rel[i]];
+                    }
+                }
+
+                return tmp || '--';
+            }
+
+            return item[setting.column] || '--';
+        },
+
+        getSource() {
+            axios[this.source.method](this.source.url).then((res) => {
+                this.initTable(res.data);
+            });
+        },
+
+        initTable(response) {
+            this.source_data = response.data;
+            this.page_settings = response.meta;
+        }
+    },
+
+    beforeMount() {
+        this.getSource();
+    }
+})
 </script>

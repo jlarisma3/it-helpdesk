@@ -16,6 +16,7 @@ Route::resource('ticket', TicketController::class);
 
 Route::prefix('admin')->group(function () {
     //user
+    Route::get('user/all', [UserController::class, 'all'])->name('user.all');
     Route::resource('user', UserController::class);
 
     //department
