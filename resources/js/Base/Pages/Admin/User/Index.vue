@@ -10,9 +10,11 @@
                         <h1 class="text-base font-semibold leading-6 text-gray-900">Users</h1>
                         <p class="mt-2 text-sm text-gray-700">A list of all registered users under this system.</p>
                     </div>
-                    <LinkButton :href="route('user.create')" v-if="userCan('user.create')">
-                        Create User
-                    </LinkButton>
+                    <div class="pt-2 sm:pt-0">
+                        <LinkButton :href="route('user.create')" v-if="userCan('user.create')">
+                            Create User
+                        </LinkButton>
+                    </div>
                 </template>
                 <template #actions="{data}">
                     <a :href="route('user.show', {user: data.id})" class="text-sm text-indigo-600 hover:text-indigo-900">
@@ -39,7 +41,7 @@ const columns = [
 ];
 
 const source = {
-    url: route('user.all'),
+    url: route('user.all') + '?page=1',
     method: 'get'
 };
 

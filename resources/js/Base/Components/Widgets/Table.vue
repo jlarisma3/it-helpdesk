@@ -84,7 +84,10 @@
                 </div>
             </div>
         </div>
-        <Page />
+        <Page
+            v-if="page_settings"
+            :settings="page_settings"
+        />
     </div>
 </template>
 
@@ -135,7 +138,6 @@ export default defineComponent({
 
     methods: {
         tableData(setting, item) {
-            console.log(setting, item);
             if(setting.column.match(/\./) != null)
             {
                 let rel = setting.column.split('.');
@@ -168,7 +170,8 @@ export default defineComponent({
     },
 
     beforeMount() {
-        this.getSource();
+        if(this.source != undefined)
+            this.getSource();
     }
 })
 </script>
