@@ -33,8 +33,8 @@ import Table from "../../../Components/Widgets/Table.vue";
 import LinkButton from "../../../Components/Widgets/LinkButton.vue";
 
 const columns = [
-    {label: 'ID', column: 'id', sortable: true},
-    {label: 'Name', column: 'display_name', sortable: true},
+    {label: 'ID', column: 'id', sortable: true, direction: 'asc'},
+    {label: 'Name', column: 'display_name', sortable: true, direction: 'asc'},
     {label: 'Email', column: 'email', sortable: false},
     {label: 'Branch', column: 'branch', sortable: false},
     {label: 'Department', column: 'department', sortable: false},

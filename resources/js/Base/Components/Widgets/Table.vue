@@ -47,12 +47,13 @@
 
                             <template v-for="(column, i) in columns" :key="i">
                                 <th scope="col" :class="[{'sm:pl-0' : i == 0}, 'py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900']">
-                                    <a href="#" class="group inline-flex">
+                                    <a v-if="column.sortable" @click="sortData(column)" href="javascript:void(0)" class="group inline-flex">
                                         {{ column.label }}
-                                        <span v-if="column.sortable" class="ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
+                                        <span class="ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                                           <ChevronDownIcon class="h-5 w-5" aria-hidden="true" />
                                         </span>
                                     </a>
+                                    <span v-else>{{ column.label }}</span>
                                 </th>
                             </template>
                             <th v-if="hasActions" scope="col" class="relative py-3.5 pl-3 pr-0">&nbsp;</th>
@@ -175,6 +176,15 @@ export default defineComponent({
             this.filter[filter.type] = filter;
 
             this.getSource();
+        },
+
+        sortData(column) {
+            let filter = {
+                type: 'sort',
+                value: encodeURI('{' + column.column + ':' + column.direction + '}')
+            }
+
+            this.setFilter(filter);
         },
 
         getQueryFilter() {
