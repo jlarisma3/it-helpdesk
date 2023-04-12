@@ -181,7 +181,12 @@ export default defineComponent({
         sortData(column) {
             let filter = {
                 type: 'sort',
-                value: encodeURI('{' + column.column + ':' + column.direction + '}')
+                value: encodeURI(
+                    JSON.stringify({
+                        column: column.column,
+                        direction: column.direction
+                    })
+                )
             }
 
             this.setFilter(filter);

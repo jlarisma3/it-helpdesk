@@ -25,8 +25,13 @@ class UserRepository implements RepoInterface
 
     public function all(Request $request)
     {
-        return $this->model
-            ->with(['branch', 'department'])
-            ->paginate(config('data.page_limit'));
+        $query = $this->model->with(['branch', 'department']);
+
+        if($sort = $request->query('sort')) {
+            $sort = json_decode($sort);
+            $query = $query->orderBy($sort->column == 'display_name' ? 'first_name' : $sort->column, $sort->direction);
+        }
+
+        return $query->paginate(config('data.page_limit'));
     }
 }
