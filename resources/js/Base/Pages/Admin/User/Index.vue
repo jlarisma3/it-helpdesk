@@ -41,7 +41,7 @@ const columns = [
 ];
 
 const source = {
-    url: route('user.all') + '?page=1',
+    url: route('user.all'),
     method: 'get'
 };
 

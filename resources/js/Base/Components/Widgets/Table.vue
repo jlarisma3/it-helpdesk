@@ -87,6 +87,7 @@
         <Page
             v-if="page_settings"
             :settings="page_settings"
+            @update:page="setFilter"
         />
     </div>
 </template>
@@ -126,7 +127,9 @@ export default defineComponent({
     data() {
         return {
             source_data: [],
-            page_settings: null
+            page_settings: null,
+            filter: {}
+
         }
     },
 
@@ -158,7 +161,7 @@ export default defineComponent({
         },
 
         getSource() {
-            axios[this.source.method](this.source.url).then((res) => {
+            axios[this.source.method](this.source.url + this.getQueryFilter()).then((res) => {
                 this.initTable(res.data);
             });
         },
@@ -166,6 +169,25 @@ export default defineComponent({
         initTable(response) {
             this.source_data = response.data;
             this.page_settings = response.meta;
+        },
+
+        setFilter(filter) {
+            this.filter[filter.type] = filter;
+
+            this.getSource();
+        },
+
+        getQueryFilter() {
+            let url = [];
+
+            let filter;
+            for(filter in this.filter) {
+                url.push(this.filter[filter].type + '=' + this.filter[filter].value);
+            }
+
+            return (url.length > 0)
+                ? '?' + url.join('&')
+                : '';
         }
     },
 

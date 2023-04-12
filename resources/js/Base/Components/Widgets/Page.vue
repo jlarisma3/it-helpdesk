@@ -9,15 +9,15 @@
                 <p class="text-sm text-gray-700">
                     Showing
                     {{ ' ' }}
-                    <span class="font-medium">1</span>
+                    <span class="font-medium">{{ settings.from }}</span>
                     {{ ' ' }}
                     to
                     {{ ' ' }}
-                    <span class="font-medium">10</span>
+                    <span class="font-medium">{{ settings.to }}</span>
                     {{ ' ' }}
                     of
                     {{ ' ' }}
-                    <span class="font-medium">97</span>
+                    <span class="font-medium">{{ settings.total }}</span>
                     {{ ' ' }}
                     results
                 </p>
@@ -30,23 +30,16 @@
                     </a>
                     <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
                     <template v-for="(page, i) in pageNumbers">
-                        <a v-if="page.is_page == true" href="#"
+                        <a @click="$emit('update:page', page)" v-if="page.is_page == true" href="javascript:void(0)"
                            :class="[
                                {'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0':page.current == false},
                                {'bg-indigo-600 z-10 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600': page.current == true }, 'relative inline-flex items-center px-4 py-2 text-sm font-semibold']">
-                            {{ page.page }}
+                            {{ page.value }}
                         </a>
                         <span v-if="page.is_page == false" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
                             ...
                         </span>
                     </template>
-<!--                    <a href="#" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">1</a>
-                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">2</a>
-                    <a href="#" class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">3</a>
-                    <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">...</span>
-                    <a href="#" class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">8</a>
-                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">9</a>
-                    <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">10</a>-->
                     <a v-if="this.settings.last_page > 1 && this.settings.last_page != this.settings.current_page" href="#" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
                         <span class="sr-only">Next</span>
                         <ChevronRightIcon class="h-5 w-5" aria-hidden="true" />
@@ -68,26 +61,31 @@ export default defineComponent({
 
     props: ['settings'],
 
+    emits: ['update:page'],
+
     computed: {
         pageNumbers() {
             const pagelinks = [];
             for(let i = 1; i <= this.settings.last_page; i++) {
                 if (i <= 3 || i > this.settings.last_page - 3) {
                     pagelinks.push({
-                        page: i,
+                        value: i,
                         is_page: true,
+                        type: 'page',
                         current: this.settings.current_page == i
                     })
                 } else if(i >= this.settings.current_page - 2 && i <= this.settings.current_page + 2) {
                     pagelinks.push({
-                        page: i,
+                        value: i,
                         is_page: true,
+                        type: 'page',
                         current: this.settings.current_page == i
                     })
                 } else {
                     pagelinks.push({
-                        page: '...',
+                        value: '...',
                         is_page: false,
+                        type: 'page',
                         current: this.settings.current_page == i
                     })
                 }
@@ -98,7 +96,7 @@ export default defineComponent({
     },
 
     mounted() {
-        console.log(this.settings)
+        //console.log(this.settings)
     }
 })
 </script>
