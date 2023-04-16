@@ -1,9 +1,16 @@
 <template>
     <div>
         <form @submit.prevent="$emit('submitted')">
-            <slot name="form"></slot>
+            <div class="space-y-12">
+                <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+                    <div>
+                        <slot name="form-header"></slot>
+                    </div>
+                    <slot name="form"></slot>
+                </div>
+            </div>
 
-            <div class="mt-3 flex items-center justify-end text-right" v-if="hasActions">
+            <div class="mt-6 flex items-center justify-end gap-x-6" v-if="hasActions">
                 <slot name="actions"></slot>
             </div>
         </form>
