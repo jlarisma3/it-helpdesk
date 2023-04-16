@@ -45,12 +45,13 @@
                                 <span class="sr-only">Edit</span>
                             </th>-->
 
-                            <template v-for="(column, i) in columns" :key="i">
+                            <template v-for="(column, i) in sortables" :key="i">
                                 <th scope="col" :class="[{'sm:pl-0' : i == 0}, 'py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900']">
                                     <a v-if="column.sortable" @click="sortData(column)" href="javascript:void(0)" class="group inline-flex">
                                         {{ column.label }}
                                         <span class="ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                                          <ChevronDownIcon class="h-5 w-5" aria-hidden="true" />
+                                            <ChevronDownIcon v-if="column.direction != undefined && column.direction == 'desc'" class="h-5 w-5" aria-hidden="true" />
+                                            <ChevronUpIcon v-else class="h-5 w-5" aria-hidden="true" />
                                         </span>
                                     </a>
                                     <span v-else>{{ column.label }}</span>
@@ -60,17 +61,6 @@
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-<!--                            <tr v-for="person in people" :key="person.email">
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ person.name }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.title }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.email }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.role }}</td>
-                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900"
-                                >Edit<span class="sr-only">, {{ person.name }}</span></a
-                                >
-                            </td>
-                        </tr>-->
                             <tr  v-for="(item, k) in source_data" :key="k">
                                 <td v-for="(column, i) in columns" :key="i" :class="[{'sm:pl-0' : (i == 0)}, 'whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900']" >
                                     {{ tableData(column, item) }}
@@ -95,28 +85,13 @@
 
 <script>
 import { defineComponent } from "vue";
-import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/20/solid'
 import Page from "./Page.vue";
-
-const people = [
-    { name: '100012', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-    { name: '100012', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-    { name: '100012', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-    { name: '100012', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-    { name: '100012', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-    // More people...
-]
 
 export default defineComponent({
     name: "Table",
 
-    components: { ChevronDownIcon, Page },
-
-    setup() {
-        return {
-            people
-        };
-    },
+    components: { ChevronUpIcon, ChevronDownIcon, Page },
 
     props: [
         'columns',
@@ -129,7 +104,8 @@ export default defineComponent({
         return {
             source_data: [],
             page_settings: null,
-            filter: {}
+            filter: {},
+            sortables: []
 
         }
     },
@@ -179,12 +155,24 @@ export default defineComponent({
         },
 
         sortData(column) {
+
+            let sort;
+            for(let x in this.sortables) {
+                if(column.column == this.sortables[x].column) {
+                    this.sortables[x].direction = this.sortables[x].direction === 'asc'
+                        ? 'desc'
+                        : 'asc';
+
+                    sort = this.sortables[x];
+                } else this.sortables[x].direction = 'asc';
+            }
+
             let filter = {
                 type: 'sort',
                 value: encodeURI(
                     JSON.stringify({
-                        column: column.column,
-                        direction: column.direction
+                        column: sort.column,
+                        direction: sort.direction
                     })
                 )
             }
@@ -203,12 +191,22 @@ export default defineComponent({
             return (url.length > 0)
                 ? '?' + url.join('&')
                 : '';
+        },
+
+        setSortables() {
+            /*this.sortables = this.columns.filter((column) => {
+                return column.sortable == true;
+            });*/
+
+            this.sortables = this.columns;
         }
     },
 
     beforeMount() {
         if(this.source != undefined)
             this.getSource();
+
+        this.setSortables();
     }
 })
 </script>
