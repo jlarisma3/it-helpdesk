@@ -16,6 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Mews\Purifier\Casts\CleanHtmlInput;
 
 class User extends Authenticatable
 {
@@ -55,6 +56,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'first_name' => CleanHtmlInput::class,
+        'last_name' => CleanHtmlInput::class,
+        'address' => CleanHtmlInput::class,
+        'contact_no' => CleanHtmlInput::class
     ];
 
     /**
