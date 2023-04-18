@@ -1,6 +1,12 @@
 <template>
     <App>
         <template #main-content>
+            <BranchForm
+                :formshow="modal.branch"
+                @close="() => { modal.branch = false }"
+            />
+
+            <!-- form -->
             <FormSection @submitted="submit">
                 <template #form-header>
                     <h2 class="text-base font-semibold leading-7 text-gray-900">User Info</h2>
@@ -108,7 +114,7 @@
                 </template>
 
                 <template #actions>
-                    <LinkButton :href="route('user.index')" :css="'border-gray-500 bg-white text-gray-700 mr-2'">
+                    <LinkButton :href="route('user.index')" :btn_class="'cancel'">
                         Cancel
                     </LinkButton>
                     <Button>
@@ -128,11 +134,13 @@ import TextForm from "../../../Components/Widgets/TextForm.vue";
 import SelectForm from "../../../Components/Widgets/SelectForm.vue";
 import LinkButton from "../../../Components/Widgets/LinkButton.vue";
 import Button from "../../../Components/Widgets/Button.vue";
+import Modal from "../../../Components/Widgets/Modal.vue";
+import BranchForm from "./Partials/BranchForm.vue";
 
 export default defineComponent({
     name: "Form",
 
-    components: {Button, LinkButton, SelectForm, TextForm, FormSection, App},
+    components: {BranchForm, Modal, Button, LinkButton, SelectForm, TextForm, FormSection, App},
 
     /*props: [],*/
 
@@ -155,7 +163,12 @@ export default defineComponent({
                 support_group_id: 'default_val',
                 password: '',
                 _method: ''
-            })
+            }),
+
+            modal: {
+                branch: true,
+                department: true
+            }
         }
     },
 
@@ -167,7 +180,7 @@ export default defineComponent({
     methods: {
         submit() {
             console.log(this.form);
-        }
+        },
     },
 
 })
