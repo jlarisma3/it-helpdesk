@@ -67,20 +67,32 @@
 
                         <div class="sm:col-span-3">
                             <SelectForm
+                                @click:add_new="() => { modal.branch = true }"
+                                :has_add="true"
                                 :label="'Branch'"
                                 :model-value="form.branch_id"
                                 :error="form.errors.branch_id"
                                 @update:model-value="(d) => { form.branch_id = d; }"
-                            />
+                            >
+                                <option v-for="(branch, i) in $page.props.common.branches" :key="i" :value="branch.id">
+                                    {{ branch.name }}
+                                </option>
+                            </SelectForm>
                         </div>
 
                         <div class="sm:col-span-3">
                             <SelectForm
+                                @click:add_new="() => { modal.department = true }"
+                                :has_add="true"
                                 :label="'Department'"
                                 :model-value="form.department_id"
                                 :error="form.errors.department_id"
                                 @update:model-value="(d) => { form.department_id = d; }"
-                            />
+                            >
+                                <option v-for="(department, i) in $page.props.common.departments" :key="i" :value="department.id">
+                                    {{ department.name }}
+                                </option>
+                            </SelectForm>
                         </div>
 
                         <div class="sm:col-span-3">
@@ -89,7 +101,11 @@
                                 :model-value="form.role_id"
                                 :error="form.errors.role_id"
                                 @update:model-value="(d) => { form.role_id = d; }"
-                            />
+                            >
+                                <option v-for="(role, i) in $page.props.common.roles" :key="i" :value="role.id">
+                                    {{ role.name }}
+                                </option>
+                            </SelectForm>
                         </div>
 
                         <div class="sm:col-span-3">
@@ -108,7 +124,11 @@
                                 :model-value="form.status_id"
                                 :error="form.errors.status_id"
                                 @update:model-value="(d) => { form.status_id = d; }"
-                            />
+                            >
+                                <option v-for="(st, i) in $page.props.common.status" :key="i" :value="st.id">
+                                    {{ st.name }}
+                                </option>
+                            </SelectForm>
                         </div>
                     </div>
                 </template>
@@ -166,8 +186,8 @@ export default defineComponent({
             }),
 
             modal: {
-                branch: true,
-                department: true
+                branch: false,
+                department: false
             }
         }
     },

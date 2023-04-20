@@ -1,6 +1,12 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div>
-    <label class="block text-sm font-medium text-gray-700">{{ label }}</label>
+    <div class="flex items-center space-x-2">
+        <label class="block text-sm font-medium text-gray-700">{{ label }}</label>
+        <a v-if="has_add === true" @click="$emit('click:add_new')" class="text-sm text-indigo-300 flex items-center" href="javascript:void(0)">
+            <PlusSmallIcon class="h-5 w-4" />
+            Add new
+        </a>
+    </div>
     <div class="mt-1">
       <select
           v-model="proxySelected"
@@ -17,20 +23,22 @@
 <script>
 import { defineComponent } from 'vue'
 import ErrorMessage from './ErrorMessage';
+import { PlusSmallIcon } from "@heroicons/vue/24/outline";
 
 export default defineComponent({
     name: "SelectForm",
 
-    components: { ErrorMessage },
+    components: { ErrorMessage,PlusSmallIcon },
 
     props: [
-      'label',
-      'name',
-      'modelValue',
-      'error',
+        'label',
+        'name',
+        'modelValue',
+        'error',
+        'has_add'
     ],
 
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'click:add_new'],
 
     /*
     data() {

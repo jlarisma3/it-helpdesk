@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\User\UserUpdateRequest;
 use App\Http\Resources\Common\User\UserCollection;
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
+use App\Services\Common\StaticData;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -46,7 +47,9 @@ class UserController extends Controller
      */
     public function create(Request  $request)
     {
-        //
+        $static = app()->call(StaticData::class . '@userStaticData');
+        $this->pageData['common'] = $static;
+        
         return Inertia::render(self::RESOURCE_VIEW . 'Form', $this->pageData);
     }
 
