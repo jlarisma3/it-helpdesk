@@ -49,7 +49,7 @@ class UserController extends Controller
     {
         $static = app()->call(StaticData::class . '@userStaticData');
         $this->pageData['common'] = $static;
-        
+
         return Inertia::render(self::RESOURCE_VIEW . 'Form', $this->pageData);
     }
 
@@ -68,7 +68,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $static = app()->call(StaticData::class . '@userStaticData');
+        $this->pageData['common'] = $static;
+
+        $this->pageData['user'] = $user;
+
+        return Inertia::render(self::RESOURCE_VIEW . 'Form', $this->pageData);
     }
 
     /**

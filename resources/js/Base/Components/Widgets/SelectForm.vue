@@ -2,9 +2,9 @@
   <div>
     <div class="flex items-center space-x-2">
         <label class="block text-sm font-medium text-gray-700">{{ label }}</label>
-        <a v-if="has_add === true" @click="$emit('click:add_new')" class="text-sm text-indigo-300 flex items-center" href="javascript:void(0)">
+        <a v-if="has_add === true" @click="$emit('click:add_new')" class="text-sm text-indigo-500 flex items-center" href="javascript:void(0)">
             <PlusSmallIcon class="h-5 w-4" />
-            Add new
+            Add New
         </a>
     </div>
     <div class="mt-1">

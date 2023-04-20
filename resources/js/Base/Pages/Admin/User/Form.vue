@@ -1,11 +1,17 @@
 <template>
     <App>
-        <template #main-content>
+        <template #exterior>
             <BranchForm
                 :formshow="modal.branch"
                 @close="() => { modal.branch = false }"
             />
 
+            <DepartmentForm
+                :formshow="modal.department"
+                @close="() => { modal.department = false }"
+            />
+        </template>
+        <template #main-content>
             <!-- form -->
             <FormSection @submitted="submit">
                 <template #form-header>
@@ -18,7 +24,7 @@
                         <div class="sm:col-span-3">
                             <TextForm
                                 :type="'text'"
-                                :label="'First Name'"
+                                :label="'First Name *'"
                                 :model-value="form.first_name"
                                 :error="form.errors.first_name"
                                 @update:model-value="(d) => { form.first_name = d; }"
@@ -28,7 +34,7 @@
                         <div class="sm:col-span-3">
                             <TextForm
                                 :type="'text'"
-                                :label="'Last Name'"
+                                :label="'Last Name *'"
                                 :model-value="form.last_name"
                                 :error="form.errors.last_name"
                                 @update:model-value="(d) => { form.last_name = d; }"
@@ -38,7 +44,7 @@
                         <div class="sm:col-span-4">
                             <TextForm
                                 :type="'email'"
-                                :label="'Email'"
+                                :label="'Email *'"
                                 :model-value="form.email"
                                 :error="form.errors.email"
                                 @update:model-value="(d) => { form.email = d; }"
@@ -69,7 +75,7 @@
                             <SelectForm
                                 @click:add_new="() => { modal.branch = true }"
                                 :has_add="true"
-                                :label="'Branch'"
+                                :label="'Branch *'"
                                 :model-value="form.branch_id"
                                 :error="form.errors.branch_id"
                                 @update:model-value="(d) => { form.branch_id = d; }"
@@ -84,7 +90,7 @@
                             <SelectForm
                                 @click:add_new="() => { modal.department = true }"
                                 :has_add="true"
-                                :label="'Department'"
+                                :label="'Department *'"
                                 :model-value="form.department_id"
                                 :error="form.errors.department_id"
                                 @update:model-value="(d) => { form.department_id = d; }"
@@ -97,7 +103,7 @@
 
                         <div class="sm:col-span-3">
                             <SelectForm
-                                :label="'User Role'"
+                                :label="'User Role *'"
                                 :model-value="form.role_id"
                                 :error="form.errors.role_id"
                                 @update:model-value="(d) => { form.role_id = d; }"
@@ -110,17 +116,21 @@
 
                         <div class="sm:col-span-3">
                             <SelectForm
-                                class="hidden"
+                                :class="{'hidden': form.role_id != 2}"
                                 :label="'Support Group'"
                                 :model-value="form.support_group_id"
                                 :error="form.errors.support_group_id"
                                 @update:model-value="(d) => { form.support_group_id = d; }"
-                            />
+                            >
+                                <option v-for="(group, i) in $page.props.common.groups" :key="i" :value="group.id">
+                                    {{ group.name }}
+                                </option>
+                            </SelectForm>
                         </div>
 
                         <div class="sm:col-span-3">
                             <SelectForm
-                                :label="'User Status'"
+                                :label="'User Status *'"
                                 :model-value="form.status_id"
                                 :error="form.errors.status_id"
                                 @update:model-value="(d) => { form.status_id = d; }"
@@ -156,11 +166,12 @@ import LinkButton from "../../../Components/Widgets/LinkButton.vue";
 import Button from "../../../Components/Widgets/Button.vue";
 import Modal from "../../../Components/Widgets/Modal.vue";
 import BranchForm from "./Partials/BranchForm.vue";
+import DepartmentForm from "./Partials/DepartmentForm.vue";
 
 export default defineComponent({
     name: "Form",
 
-    components: {BranchForm, Modal, Button, LinkButton, SelectForm, TextForm, FormSection, App},
+    components: {DepartmentForm, BranchForm, Modal, Button, LinkButton, SelectForm, TextForm, FormSection, App},
 
     /*props: [],*/
 
@@ -202,6 +213,13 @@ export default defineComponent({
             console.log(this.form);
         },
     },
+
+    beforeMount() {
+        for(let i in this.$page.props.user) {
+            if(this.form[i] !== undefined)
+                this.form[i] = this.$page.props.user[i];
+        }
+    }
 
 })
 </script>
