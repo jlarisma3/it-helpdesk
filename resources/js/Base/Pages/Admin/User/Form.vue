@@ -80,7 +80,7 @@
                                 :error="form.errors.branch_id"
                                 @update:model-value="(d) => { form.branch_id = d; }"
                             >
-                                <option v-for="(branch, i) in $page.props.common.branches" :key="i" :value="branch.id">
+                                <option v-for="(branch, i) in $page.props.data.common.branches" :key="i" :value="branch.id">
                                     {{ branch.name }}
                                 </option>
                             </SelectForm>
@@ -95,7 +95,7 @@
                                 :error="form.errors.department_id"
                                 @update:model-value="(d) => { form.department_id = d; }"
                             >
-                                <option v-for="(department, i) in $page.props.common.departments" :key="i" :value="department.id">
+                                <option v-for="(department, i) in $page.props.data.common.departments" :key="i" :value="department.id">
                                     {{ department.name }}
                                 </option>
                             </SelectForm>
@@ -108,7 +108,7 @@
                                 :error="form.errors.role_id"
                                 @update:model-value="(d) => { form.role_id = d; }"
                             >
-                                <option v-for="(role, i) in $page.props.common.roles" :key="i" :value="role.id">
+                                <option v-for="(role, i) in $page.props.data.common.roles" :key="i" :value="role.id">
                                     {{ role.name }}
                                 </option>
                             </SelectForm>
@@ -122,7 +122,7 @@
                                 :error="form.errors.support_group_id"
                                 @update:model-value="(d) => { form.support_group_id = d; }"
                             >
-                                <option v-for="(group, i) in $page.props.common.groups" :key="i" :value="group.id">
+                                <option v-for="(group, i) in $page.props.data.common.groups" :key="i" :value="group.id">
                                     {{ group.name }}
                                 </option>
                             </SelectForm>
@@ -135,7 +135,7 @@
                                 :error="form.errors.status_id"
                                 @update:model-value="(d) => { form.status_id = d; }"
                             >
-                                <option v-for="(st, i) in $page.props.common.status" :key="i" :value="st.id">
+                                <option v-for="(st, i) in $page.props.data.common.status" :key="i" :value="st.id">
                                     {{ st.name }}
                                 </option>
                             </SelectForm>
@@ -215,10 +215,7 @@ export default defineComponent({
     },
 
     beforeMount() {
-        for(let i in this.$page.props.user) {
-            if(this.form[i] !== undefined)
-                this.form[i] = this.$page.props.user[i];
-        }
+        this.fillForm(this.form, this.$page.props.data.user);
     }
 
 })

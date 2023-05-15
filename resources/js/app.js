@@ -54,6 +54,16 @@ createInertiaApp({
             ];
         }
 
+        vApp.config.globalProperties.fillForm = (form, data, callback) => {
+            for(let i in data) {
+                if(form[i] !== undefined)
+                    form[i] = data[i];
+            }
+
+            if(callback)
+                callback(form, data)
+        }
+
 
         vApp.mount(el)
 
